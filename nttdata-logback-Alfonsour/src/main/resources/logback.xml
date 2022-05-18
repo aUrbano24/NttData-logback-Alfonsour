@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+	<!-- VARIABLE ASOCIADA A LA FECHA -->
+	<timestamp key="logDateVar" datePattern="dd-MM-yyyy" />
+	
+	<!-- ROLLINGFILEAPPENDER -->
+	<appender name="Tuberia¡Logback"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		
+		<!-- NOMBRE DEL FICHERO EN EL QUE DESEMBOCA LA TUBERÍA -->
+		<file>C://dev//logs//ficheroSalidaEjemplo-${logDateVar}.log</file>
+		
+		<!-- POLÍTICA QUE DIVIDE Y GESTIONA EL FICHERO -->
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>C://dev//logs//ficheroSalidaEjemplo-${logDateVar}.%i.logDual.zip</fileNamePattern>
+			
+			<!-- CANTIDAD DE FICHEROS -->
+			<minIndex>1</minIndex>
+			<maxIndex>3</maxIndex>
+		</rollingPolicy>
+
+		<!-- PESO MÁXIMO DEL FICHERO -->
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>50KB</maxFileSize>
+		</triggeringPolicy>
+		
+		<!-- FORMATO SALIDA DE LA TRAZA -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%method] - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- LOGGER ROOT (CONFIGURADO AL NIVEL INFO SALE POR TUBERIA...)-->
+	<!-- EL NIVEL DETERMINA LO ESTRECHA QUE PUEDA SER LA TUBERÍA -->
+	<root level="debug">
+		<appender-ref ref="TuberiaEjemploLogback" />
+	</root>
+
+</configuration>
